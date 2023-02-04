@@ -698,6 +698,10 @@ class NotesFrame(wx.Frame):
         self.resultsbox.Bind(wx.EVT_LISTBOX, self.OnResultsSelect)
         self.editbox = EditBox(self.panel, self._db)
         self.editbox.Bind(wx.EVT_KILL_FOCUS, self.OnEditboxLeave)
+        def TryNavigate(event):
+            if not event.GetEventObject().HandleAsNavigationKey(event):
+                event.Skip()
+        self.editbox.Bind(wx.EVT_KEY_DOWN, TryNavigate)
         self.editbox.Bind(EditBox.EVT_LOAD, self.OnNoteLoad)
         self.editbox.Bind(EditBox.EVT_UNLOAD, self.OnNoteUnload)
         self.editbox.Bind(EditBox.EVT_SAVE, self.OnNoteSave)
